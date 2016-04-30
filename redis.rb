@@ -49,6 +49,14 @@ a = [];redis.hkeys("target").each { |x| a << x }
 redis.hmget( "target", a[0,100])
 
 
+redis.zrangebylex("compl", "[mar", "+")
+
+redis.zrangebylex("compl", "[martin", "+" , :limit => [0, 50] )
+
+redis.zrangebylex("compl", "[martin", "+" , :limit => [0, 50] )
+
+
+
 
 
 

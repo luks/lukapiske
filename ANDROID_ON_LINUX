@@ -1,0 +1,58 @@
+
+
+ANDROID ON LINUX
+
+1. Setting up a Device for Development
+	
+	* create: /etc/udev/rules.d/51-android.rules with following line
+	  
+		SUBSYSTEM=="usb", ATTR{idVendor}=="0bb4", MODE="0666", GROUP="plugdev"
+		
+		replace ATTR{idVendor} "0bb4" with coresponding usb vendor id
+		
+		USB Vendor IDes here: http://developer.android.com/tools/device.html
+	
+	* chmod a+r /etc/udev/rules.d/51-android.rules
+
+2. Go to android settings and enable developer options
+
+
+3. Command Line Tool Commands
+
+	Set android path
+	
+	* ANDROID_HOME=/home/luky/Android
+	* PATH=$ANDROID_HOME/Sdk/platform-tools:$PATH
+ `
+	Go to project root
+	Android Debug Bridge (ADB)
+	* chmod +x gradlew ( only once )
+	* ./gradlew assembleDebug - This command will compile the code.
+	* adb install -r app/build/outputs/apk/app-debug-unaligned.apk - This command will install apk.
+	* adb shell am start -n lukapiske.oliver/lukapiske.oliver.MainActivity - This will start application.
+
+	* enable gradle daemon for better build
+		touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
+	* ./gradlew tasks - see all gradlew tasks
+
+	* adb logcat  - to see android log
+
+
+4. Thread 
+	* Main thread ( called UI thread )
+		- Do not block the UI thread
+		- Do not access the Android UI toolkit from outside the UI thread
+		* use AsyncTask for shorter jobs (1-3 sec.)
+
+5. Permission
+	- List permission
+	* adb shell pm list permissions -d -g
+	
+
+6. Activity hierarchy 
+	* Intent - to communicate ( intent is something as envelop )
+	* EXPILCIT - add address of action
+	* IMPLICIT - add name of action so that any aplication which could resolve that action is fired, and it solve that application in own process - Our application has to have privilege for IMPLICIT intents ( SEND SMS, TAKE PHOTO,...) 
+
+
+
